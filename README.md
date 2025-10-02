@@ -96,8 +96,8 @@ Add this to your Claude Desktop configuration file:
 {
   "mcpServers": {
     "seven": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-seven/dist/index.js"]
+      "command": "npx",
+      "args": ["@seven.io/mcp"]
     }
   }
 }
@@ -108,8 +108,8 @@ Add this to your Claude Desktop configuration file:
 {
   "mcpServers": {
     "seven": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-seven/dist/index.js"],
+      "command": "npx",
+      "args": ["@seven.io/mcp"],
       "env": {
         "SEVEN_API_KEY": "your-api-key"
       }
@@ -124,8 +124,8 @@ To enable request/response logging for debugging, add the `SEVEN_LOG_FILE` envir
 {
   "mcpServers": {
     "seven": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-seven/dist/index.js"],
+      "command": "npx",
+      "args": ["@seven.io/mcp"],
       "env": {
         "SEVEN_API_KEY": "your-api-key",
         "SEVEN_LOG_FILE": "/tmp/mcp-seven-debug.log"
