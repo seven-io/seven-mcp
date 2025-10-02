@@ -5,7 +5,7 @@ export async function getAvailableNumbers(client: SevenClient, params?: NumberPa
   return await client.get('/numbers/available', params);
 }
 
-export async function orderNumber(client: SevenClient, params: { number: string }) {
+export async function orderNumber(client: SevenClient, params: { number: string; payment_interval?: 'monthly' | 'annually' }) {
   return await client.post('/numbers/order', params);
 }
 
@@ -52,6 +52,11 @@ export const numbersTools = [
         number: {
           type: 'string',
           description: 'Phone number to purchase',
+        },
+        payment_interval: {
+          type: 'string',
+          enum: ['monthly', 'annually'],
+          description: 'Payment interval for the number (default: annually)',
         },
       },
       required: ['number'],
