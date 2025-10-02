@@ -7,6 +7,13 @@ const CLIENT_ID = 'seven-mcp';  // Static OAuth client ID
 async function main() {
   const command = process.argv[2];
 
+  // If no command is provided, start the MCP server
+  if (!command) {
+    const startMcpServer = (await import('./index.js')).default;
+    await startMcpServer();
+    return;
+  }
+
   switch (command) {
     case 'login':
       await handleLogin();
