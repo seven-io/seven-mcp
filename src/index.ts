@@ -268,7 +268,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error('Seven.io MCP Server running on stdio');
 }
 
 // Export for programmatic use
