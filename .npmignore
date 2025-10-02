@@ -1,0 +1,12 @@
+src/
+tsconfig.json
+jest.config.js
+.env.example
+*.test.ts
+__tests__/
+coverage/
+.git/
+.github/
+*.log
+.DS_Store
+.claude/
