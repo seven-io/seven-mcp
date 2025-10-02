@@ -1,3 +1,5 @@
+<img src="https://www.seven.io/wp-content/uploads/Logo.svg" width="250" />
+
 # MCP Seven
 
 Model Context Protocol (MCP) server for the [seven.io](https://www.seven.io) API. This server provides comprehensive access to seven.io's SMS, voice, RCS messaging, and account management services.
