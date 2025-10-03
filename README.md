@@ -91,7 +91,9 @@ If both authentication methods are configured, OAuth takes priority.
 Add this to your Claude Desktop configuration file:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+
 **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
 **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
 **With OAuth (recommended)**:
