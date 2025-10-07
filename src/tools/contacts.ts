@@ -36,17 +36,49 @@ export const contactsTools = [
     inputSchema: {
       type: 'object',
       properties: {
-        nick: {
+        firstname: {
           type: 'string',
-          description: 'Contact nickname',
+          description: 'First name',
         },
-        empfaenger: {
+        lastname: {
           type: 'string',
-          description: 'Phone number',
+          description: 'Last name',
+        },
+        mobile_number: {
+          type: 'string',
+          description: 'Mobile phone number',
+        },
+        home_number: {
+          type: 'string',
+          description: 'Home phone number',
         },
         email: {
           type: 'string',
           description: 'Email address',
+        },
+        address: {
+          type: 'string',
+          description: 'Street address',
+        },
+        postal_code: {
+          type: 'string',
+          description: 'Postal/ZIP code',
+        },
+        city: {
+          type: 'string',
+          description: 'City',
+        },
+        birthday: {
+          type: 'string',
+          description: 'Birthday',
+        },
+        notes: {
+          type: 'string',
+          description: 'Notes',
+        },
+        avatar: {
+          type: 'string',
+          description: 'Avatar image URL',
         },
         groups: {
           type: 'array',
@@ -80,17 +112,49 @@ export const contactsTools = [
           type: 'string',
           description: 'Contact ID to update',
         },
-        nick: {
+        firstname: {
           type: 'string',
-          description: 'Contact nickname',
+          description: 'First name',
         },
-        empfaenger: {
+        lastname: {
           type: 'string',
-          description: 'Phone number',
+          description: 'Last name',
+        },
+        mobile_number: {
+          type: 'string',
+          description: 'Mobile phone number',
+        },
+        home_number: {
+          type: 'string',
+          description: 'Home phone number',
         },
         email: {
           type: 'string',
           description: 'Email address',
+        },
+        address: {
+          type: 'string',
+          description: 'Street address',
+        },
+        postal_code: {
+          type: 'string',
+          description: 'Postal/ZIP code',
+        },
+        city: {
+          type: 'string',
+          description: 'City',
+        },
+        birthday: {
+          type: 'string',
+          description: 'Birthday',
+        },
+        notes: {
+          type: 'string',
+          description: 'Notes',
+        },
+        avatar: {
+          type: 'string',
+          description: 'Avatar image URL',
         },
         groups: {
           type: 'array',

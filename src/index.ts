@@ -95,7 +95,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         result = await deleteRCS(client, args.id as string);
         break;
       case 'rcs_events':
-        result = await rcsEvents(client, args.event_data);
+        result = await rcsEvents(client, args);
         break;
 
       // SMS tools
@@ -173,10 +173,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         result = await getNumber(client, args.number as string);
         break;
       case 'update_number':
-        result = await updateNumber(client, args.number as string, args.config);
+        const { number: updateNum, ...updateConfig } = args;
+        result = await updateNumber(client, updateNum as string, updateConfig as any);
         break;
       case 'delete_number':
-        result = await deleteNumber(client, args.number as string);
+        const { number: delNumber, delete_immediately } = args;
+        result = await deleteNumber(client, delNumber as string, delete_immediately !== undefined ? { delete_immediately: delete_immediately as boolean } : undefined);
         break;
 
       // Contacts tools
@@ -212,7 +214,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         result = await updateGroup(client, groupId as string, groupParams as any);
         break;
       case 'delete_group':
-        result = await deleteGroup(client, args.id as string);
+        const { id: delGroupId, delete_contacts } = args;
+        result = await deleteGroup(client, delGroupId as string, delete_contacts !== undefined ? { delete_contacts: delete_contacts as boolean } : undefined);
         break;
 
       // Subaccounts tools

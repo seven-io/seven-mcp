@@ -38,15 +38,11 @@ export const subaccountsTools = [
       properties: {
         name: {
           type: 'string',
-          description: 'Subaccount name',
+          description: 'Full first and last name of the account owner',
         },
         email: {
           type: 'string',
-          description: 'Subaccount email',
-        },
-        auto_recharge: {
-          type: 'boolean',
-          description: 'Enable automatic credit transfer',
+          description: 'Email address of the account',
         },
       },
       required: ['name', 'email'],
@@ -54,7 +50,7 @@ export const subaccountsTools = [
   },
   {
     name: 'update_subaccount',
-    description: 'Update subaccount auto credit transfer settings',
+    description: 'Configure automatic balance transfer for a subaccount',
     inputSchema: {
       type: 'object',
       properties: {
@@ -62,12 +58,16 @@ export const subaccountsTools = [
           type: 'string',
           description: 'Subaccount ID',
         },
-        auto_recharge: {
-          type: 'boolean',
-          description: 'Enable/disable automatic credit transfer',
+        threshold: {
+          type: 'number',
+          description: 'Credit threshold below which credit should be transferred (in EUR)',
+        },
+        amount: {
+          type: 'number',
+          description: 'Amount of credit to transfer from main account (in EUR)',
         },
       },
-      required: ['id'],
+      required: ['id', 'threshold', 'amount'],
     },
   },
   {

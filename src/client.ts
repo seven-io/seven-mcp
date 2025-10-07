@@ -89,8 +89,8 @@ export class SevenClient {
     return response.data;
   }
 
-  async delete<T>(path: string): Promise<T> {
-    const response = await this.client.delete<T>(path);
+  async delete<T>(path: string, params?: Record<string, any>): Promise<T> {
+    const response = await this.client.delete<T>(path, { params });
     return response.data;
   }
 }

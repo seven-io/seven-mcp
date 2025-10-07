@@ -6,7 +6,9 @@ export async function sendSMS(client: SevenClient, params: SMSParams) {
 }
 
 export async function deleteSMS(client: SevenClient, ids: string | string[]) {
-  return await client.delete(`/sms?ids=${Array.isArray(ids) ? ids.join(',') : ids}`);
+  // Convert ids to array format for query params
+  const idsArray = Array.isArray(ids) ? ids : [ids];
+  return await client.delete('/sms', { ids: idsArray });
 }
 
 export const smsTools = [
@@ -76,6 +78,40 @@ export const smsTools = [
         ttl: {
           type: 'number',
           description: 'Time to live in minutes',
+        },
+        udh: {
+          type: 'string',
+          description: 'User Data Header for binary SMS',
+        },
+        is_binary: {
+          type: 'boolean',
+          description: 'Send as binary SMS',
+        },
+        files: {
+          type: 'array',
+          description: 'File attachments for SMS',
+          items: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'File name',
+              },
+              contents: {
+                type: 'string',
+                description: 'Base64 encoded file content',
+              },
+              validity: {
+                type: 'number',
+                description: 'File deletion period in days',
+              },
+              password: {
+                type: 'string',
+                description: 'Password to access the file',
+              },
+            },
+            required: ['name', 'contents'],
+          },
         },
       },
       required: ['to', 'text'],

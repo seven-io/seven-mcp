@@ -17,12 +17,12 @@ export async function getNumber(client: SevenClient, number: string) {
   return await client.get(`/numbers/active/${number}`);
 }
 
-export async function updateNumber(client: SevenClient, number: string, params: any) {
+export async function updateNumber(client: SevenClient, number: string, params: { friendly_name?: string; sms_forward?: string[]; email_forward?: string[]; slack_forward?: string }) {
   return await client.patch(`/numbers/active/${number}`, params);
 }
 
-export async function deleteNumber(client: SevenClient, number: string) {
-  return await client.delete(`/numbers/active/${number}`);
+export async function deleteNumber(client: SevenClient, number: string, params?: { delete_immediately?: boolean }) {
+  return await client.delete(`/numbers/active/${number}`, params);
 }
 
 export const numbersTools = [
@@ -39,6 +39,18 @@ export const numbersTools = [
         type: {
           type: 'string',
           description: 'Number type (e.g., mobile, landline)',
+        },
+        features_sms: {
+          type: 'boolean',
+          description: 'Filter numbers supporting SMS',
+        },
+        features_a2p_sms: {
+          type: 'boolean',
+          description: 'Filter numbers supporting A2P SMS',
+        },
+        features_voice: {
+          type: 'boolean',
+          description: 'Filter numbers supporting voice calls',
         },
       },
     },
@@ -86,7 +98,7 @@ export const numbersTools = [
   },
   {
     name: 'update_number',
-    description: 'Update phone number configuration',
+    description: 'Update phone number configuration including friendly name and forwarding settings',
     inputSchema: {
       type: 'object',
       properties: {
@@ -94,12 +106,26 @@ export const numbersTools = [
           type: 'string',
           description: 'Phone number to update',
         },
-        config: {
-          type: 'object',
-          description: 'Configuration to update (forwarding, webhooks, etc.)',
+        friendly_name: {
+          type: 'string',
+          description: 'Custom friendly name for the number',
+        },
+        sms_forward: {
+          type: 'array',
+          description: 'Phone numbers to forward incoming SMS to',
+          items: { type: 'string' },
+        },
+        email_forward: {
+          type: 'array',
+          description: 'Email addresses to forward incoming SMS to',
+          items: { type: 'string' },
+        },
+        slack_forward: {
+          type: 'string',
+          description: 'Slack webhook URL to forward incoming SMS to',
         },
       },
-      required: ['number', 'config'],
+      required: ['number'],
     },
   },
   {
@@ -111,6 +137,10 @@ export const numbersTools = [
         number: {
           type: 'string',
           description: 'Phone number to delete',
+        },
+        delete_immediately: {
+          type: 'boolean',
+          description: 'Delete immediately instead of at end of billing period',
         },
       },
       required: ['number'],

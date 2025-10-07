@@ -40,7 +40,15 @@ export const webhooksTools = [
         request_method: {
           type: 'string',
           description: 'HTTP method for webhook requests',
-          enum: ['GET', 'POST'],
+          enum: ['GET', 'POST', 'JSON'],
+        },
+        event_filter: {
+          type: 'string',
+          description: 'Filter events by phone number or other criteria',
+        },
+        headers: {
+          type: 'string',
+          description: 'Custom HTTP headers to send with webhook requests. Multiple headers separated by line breaks',
         },
       },
       required: ['target_url', 'event_type'],

@@ -8,7 +8,7 @@ export async function getPricing(client: SevenClient, params?: { country?: strin
   return await client.get('/pricing', params);
 }
 
-export async function getAnalytics(client: SevenClient, params?: { start?: string; end?: string; subaccounts?: boolean }) {
+export async function getAnalytics(client: SevenClient, params?: { start?: string; end?: string; subaccounts?: string | number; group_by?: string; label?: string }) {
   return await client.get('/analytics', params);
 }
 
@@ -54,8 +54,17 @@ export const accountTools = [
           description: 'End date (YYYY-MM-DD)',
         },
         subaccounts: {
-          type: 'boolean',
-          description: 'Include subaccount statistics',
+          type: ['string', 'number'],
+          description: 'Subaccount filter: "only_main" for main account only, "all" for all accounts, or specific subaccount ID (integer)',
+        },
+        group_by: {
+          type: 'string',
+          description: 'Group analytics by (country, date, label, subaccount)',
+          enum: ['country', 'date', 'label', 'subaccount'],
+        },
+        label: {
+          type: 'string',
+          description: 'Filter by label',
         },
       },
     },

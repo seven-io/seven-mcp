@@ -10,7 +10,28 @@ export async function deleteRCS(client: SevenClient, id: string) {
 }
 
 export async function rcsEvents(client: SevenClient, params: any) {
-  return await client.post('/rcs/events', params);
+  // Transform property names based on event type
+  const payload = { ...params };
+
+  // Rename event_type to event (correct API parameter name)
+  if (payload.event_type) {
+    payload.event = payload.event_type;
+    delete payload.event_type;
+  }
+
+  // For IS_TYPING events, use 'to' property instead of 'phone'
+  if (payload.phone && payload.event === 'IS_TYPING') {
+    payload.to = payload.phone;
+    delete payload.phone;
+  }
+
+  // For READ events, use 'msg_id' instead of 'message_id'
+  if (payload.message_id && payload.event === 'READ') {
+    payload.msg_id = payload.message_id;
+    delete payload.message_id;
+  }
+
+  return await client.post('/rcs/events', payload);
 }
 
 export const rcsTools = [
@@ -56,6 +77,22 @@ export const rcsTools = [
           type: 'string',
           description: 'Custom ID for tracking',
         },
+        delay: {
+          type: 'string',
+          description: 'Delayed sending timestamp (Unix timestamp or ISO 8601)',
+        },
+        ttl: {
+          type: 'number',
+          description: 'Time to live in minutes',
+        },
+        label: {
+          type: 'string',
+          description: 'Custom label for the message',
+        },
+        performance_tracking: {
+          type: 'boolean',
+          description: 'Enable performance tracking',
+        },
       },
       required: ['to'],
     },
@@ -76,16 +113,33 @@ export const rcsTools = [
   },
   {
     name: 'rcs_events',
-    description: 'Handle RCS events (delivery reports, read receipts, etc.)',
+    description: 'Handle RCS events (delivery reports, read receipts, IS_TYPING, etc.)',
     inputSchema: {
       type: 'object',
       properties: {
-        event_data: {
-          type: 'object',
-          description: 'Event data payload',
+        event_type: {
+          type: 'string',
+          description: 'Event type (IS_TYPING, READ, DELIVERED, etc.)',
+          enum: ['IS_TYPING', 'READ', 'DELIVERED'],
+        },
+        phone: {
+          type: 'string',
+          description: 'Phone number (for IS_TYPING events)',
+        },
+        to: {
+          type: 'string',
+          description: 'Recipient phone number',
+        },
+        message_id: {
+          type: 'string',
+          description: 'Message ID (for READ events)',
+        },
+        msg_id: {
+          type: 'string',
+          description: 'Message ID (alternative)',
         },
       },
-      required: ['event_data'],
+      required: ['event_type'],
     },
   },
 ];

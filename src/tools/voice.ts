@@ -37,6 +37,14 @@ export const voiceTools = [
           type: 'boolean',
           description: 'Enable debug mode',
         },
+        ringtime: {
+          type: 'number',
+          description: 'Ring time in seconds before timeout',
+        },
+        foreign_id: {
+          type: 'string',
+          description: 'Custom ID for tracking',
+        },
       },
       required: ['to', 'text'],
     },

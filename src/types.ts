@@ -4,6 +4,13 @@ export interface SevenConfig {
   baseUrl?: string;
 }
 
+export interface SMSFileAttachment {
+  name: string;
+  contents: string;
+  validity?: number;
+  password?: string;
+}
+
 export interface SMSParams {
   to: string | string[];
   text: string;
@@ -20,6 +27,9 @@ export interface SMSParams {
   label?: string;
   foreign_id?: string;
   ttl?: number;
+  udh?: string;
+  is_binary?: boolean;
+  files?: SMSFileAttachment[];
 }
 
 export interface RCSParams {
@@ -30,6 +40,10 @@ export interface RCSParams {
   orientation?: 'horizontal' | 'vertical';
   from?: string;
   foreign_id?: string;
+  delay?: string;
+  ttl?: number;
+  label?: string;
+  performance_tracking?: boolean;
 }
 
 export interface VoiceParams {
@@ -38,6 +52,8 @@ export interface VoiceParams {
   from?: string;
   xml?: boolean;
   debug?: boolean;
+  ringtime?: number;
+  foreign_id?: string;
 }
 
 export interface LookupParams {
@@ -45,9 +61,17 @@ export interface LookupParams {
 }
 
 export interface ContactParams {
-  nick?: string;
-  empfaenger?: string;
+  firstname?: string;
+  lastname?: string;
+  mobile_number?: string;
+  home_number?: string;
   email?: string;
+  address?: string;
+  postal_code?: string;
+  city?: string;
+  birthday?: string;
+  notes?: string;
+  avatar?: string;
   groups?: string[];
 }
 
@@ -56,19 +80,24 @@ export interface GroupParams {
 }
 
 export interface SubaccountParams {
-  username?: string;
-  password?: string;
+  name?: string;
   email?: string;
-  auto_recharge?: boolean;
+  threshold?: number;
+  amount?: number;
 }
 
 export interface WebhookParams {
   target_url: string;
   event_type: string;
-  request_method?: 'GET' | 'POST';
+  request_method?: 'GET' | 'POST' | 'JSON';
+  event_filter?: string;
+  headers?: string;
 }
 
 export interface NumberParams {
   country?: string;
   type?: string;
+  features_sms?: boolean;
+  features_a2p_sms?: boolean;
+  features_voice?: boolean;
 }

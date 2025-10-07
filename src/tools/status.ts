@@ -1,10 +1,10 @@
 import { SevenClient } from '../client.js';
 
-export async function getStatus(client: SevenClient, params: { msg_id?: string; date?: string }) {
-  return await client.get('/status', params);
+export async function getStatus(client: SevenClient, params: { id: string }) {
+  return await client.get('/journal/outbound', { id: params.id });
 }
 
-export async function getLogbookSent(client: SevenClient, params?: { date_from?: string; date_to?: string; state?: string }) {
+export async function getLogbookSent(client: SevenClient, params?: { date_from?: string; date_to?: string; state?: string; limit?: number }) {
   return await client.get('/journal/outbound', params);
 }
 
@@ -19,19 +19,16 @@ export async function getLogbookVoice(client: SevenClient, params?: { date_from?
 export const statusTools = [
   {
     name: 'get_status',
-    description: 'Check delivery status of sent messages',
+    description: 'Get detailed information about a sent message using its ID',
     inputSchema: {
       type: 'object',
       properties: {
-        msg_id: {
+        id: {
           type: 'string',
-          description: 'Message ID to check status',
-        },
-        date: {
-          type: 'string',
-          description: 'Date for status report (YYYY-MM-DD)',
+          description: 'Message ID to retrieve details',
         },
       },
+      required: ['id'],
     },
   },
   {
@@ -52,6 +49,10 @@ export const statusTools = [
           type: 'string',
           description: 'Filter by message state',
           enum: ['pending', 'delivered', 'failed'],
+        },
+        limit: {
+          type: 'number',
+          description: 'Maximum number of entries to return',
         },
       },
     },

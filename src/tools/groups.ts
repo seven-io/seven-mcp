@@ -17,8 +17,8 @@ export async function updateGroup(client: SevenClient, id: string, params: Group
   return await client.patch(`/groups/${id}`, params, { formEncoded: true });
 }
 
-export async function deleteGroup(client: SevenClient, id: string) {
-  return await client.delete(`/groups/${id}`);
+export async function deleteGroup(client: SevenClient, id: string, params?: { delete_contacts?: boolean }) {
+  return await client.delete(`/groups/${id}`, params);
 }
 
 export const groupsTools = [
@@ -85,6 +85,10 @@ export const groupsTools = [
         id: {
           type: 'string',
           description: 'Group ID to delete',
+        },
+        delete_contacts: {
+          type: 'boolean',
+          description: 'Also delete all contacts in the group',
         },
       },
       required: ['id'],
