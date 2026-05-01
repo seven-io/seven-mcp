@@ -7,11 +7,13 @@ export class SevenClient {
   private client: AxiosInstance;
   private apiKey?: string;
   private clientId?: string;
+  private accessToken?: string;
   private useOAuth: boolean = false;
 
   constructor(config: SevenConfig) {
     this.apiKey = config.apiKey;
     this.clientId = config.clientId;
+    this.accessToken = config.accessToken;
     const baseUrl = config.baseUrl || 'https://gateway.seven.io/api';
 
     this.client = axios.create({
@@ -23,7 +25,13 @@ export class SevenClient {
 
     // Add request interceptor to handle authentication
     this.client.interceptors.request.use(async (config) => {
-      // Try OAuth first if client ID is provided
+      // Highest priority: explicit bearer token (HTTP transport: forwarded from inbound MCP request)
+      if (this.accessToken) {
+        config.headers.Authorization = `Bearer ${this.accessToken}`;
+        return config;
+      }
+
+      // Stdio mode: locally stored OAuth tokens with auto-refresh
       if (this.clientId) {
         try {
           const tokens = await getTokens();

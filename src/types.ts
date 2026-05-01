@@ -2,6 +2,7 @@ export interface SevenConfig {
   apiKey?: string;
   clientId?: string;
   baseUrl?: string;
+  accessToken?: string;
 }
 
 export interface SMSFileAttachment {
